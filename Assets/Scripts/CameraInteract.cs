@@ -6,6 +6,7 @@ using UnityEngine;
 public class CameraInteract : MonoBehaviour
 {
     private boxScript Tbox;
+    public GameObject Ball;
 
     private void Start()
     {
@@ -30,7 +31,10 @@ public class CameraInteract : MonoBehaviour
                     }
 
                     Tbox = box;
-                    box.GetComponent<MeshRenderer>().material.color = Color.red;
+                    Tbox.GetComponent<MeshRenderer>().material.color = Color.red;
+
+                    
+                    
                 }
             }
         }
@@ -41,6 +45,18 @@ public class CameraInteract : MonoBehaviour
             {
                 Tbox.GetComponent<MeshRenderer>().material.color = Color.white;
                 Tbox = null;
+            }
+        }
+        
+        if (Input.GetMouseButton(0))
+        {
+            Debug.Log("clicked");
+
+            if (Tbox != null)
+            {
+                Vector3 forceDirection = hit.point  - Ball.transform.position;
+                Ball.GetComponent<Rigidbody>().AddForce(forceDirection.normalized * 2, ForceMode.Impulse);
+
             }
         }
     }
