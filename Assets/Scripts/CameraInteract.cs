@@ -62,7 +62,6 @@ public class CameraInteract : MonoBehaviour
         
         if (Input.GetMouseButton(0))
         {
-            Debug.Log("clicked");
 
             if (Tbox != null)
             {
@@ -87,6 +86,11 @@ public class CameraInteract : MonoBehaviour
                 Ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 Ball.transform.position = BallInitPos;
                 Ball.transform.rotation = BallInitRot;
+            }
+
+            foreach (var obj in FindObjectOfType<GameManagement>().Objects)
+            {
+                Debug.Log(obj.name);
             }
         }
     }
