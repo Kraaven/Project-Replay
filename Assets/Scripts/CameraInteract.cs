@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 public class CameraInteract : MonoBehaviour
 {
+    //Cached data and references
     private boxScript Tbox;
     public GameObject Ball;
     public List<boxScript> Boxes;
@@ -18,8 +19,10 @@ public class CameraInteract : MonoBehaviour
         Boxes = new List<boxScript>();
     }
 
+    
     private void Start()
     {
+        //Caching references and ball data
         Tbox = FindObjectOfType<boxScript>();
         BallInitPos = Ball.transform.position;
         BallInitRot = Ball.transform.rotation;
@@ -27,6 +30,7 @@ public class CameraInteract : MonoBehaviour
 
     void Update()
     {
+        //Setting the Color tint on the Boxes. 
         RaycastHit hit;
         Ray R = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -60,6 +64,7 @@ public class CameraInteract : MonoBehaviour
             }
         }
         
+        //The control that adds force to the ball. Could be in Fixed Update
         if (Input.GetMouseButton(0))
         {
 
@@ -70,6 +75,8 @@ public class CameraInteract : MonoBehaviour
             }
         }
 
+        
+        //To stop the Ball's forces, gives the user control
         if (Input.GetMouseButton(1))
         {
             if (Tbox != null)
@@ -78,20 +85,18 @@ public class CameraInteract : MonoBehaviour
             }
         }
 
+        //
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            //Resets all the objects in the scene. Made like this so that resets can be recorded too
             foreach (var box in Boxes)
             {
                 box.resetPos();
-                Ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                Ball.transform.position = BallInitPos;
-                Ball.transform.rotation = BallInitRot;
             }
-
-            foreach (var obj in FindObjectOfType<GameManagement>().Objects)
-            {
-                Debug.Log(obj.name);
-            }
+            Ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            Ball.transform.position = BallInitPos;
+            Ball.transform.rotation = BallInitRot;
+            
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class JsonHelper
 {
-    
+        //Could not use NewtonSoft, so i resorted to using an extra static class to convert Lists. This was taken from google
         public static T[] FromJson<T>(string json)
         {
             Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);

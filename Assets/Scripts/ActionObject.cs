@@ -43,7 +43,7 @@ public class ActionObject : MonoBehaviour
         GetComponent<Rigidbody>().isKinematic = true;
     }
 
-    public void StopViewing()
+    public void stopViewing()
     {
         Viewing = false;
         GetComponent<Rigidbody>().isKinematic = false;
