@@ -20,6 +20,7 @@ public class GameManagement : MonoBehaviour
     public String filepath;
     private int LastFrame;
     public TMP_Text Frames;
+    public firebaseConnect ServerConnection;
     private void Awake()
     {
         //Creating list of ActionObjects and set filepath
@@ -35,6 +36,8 @@ public class GameManagement : MonoBehaviour
         //Set state to starting
         UI.SetView("Simulation");
         Frames.gameObject.SetActive(false);
+
+        ServerConnection = GetComponent<firebaseConnect>();
     }
 
     public void Update()
@@ -101,30 +104,18 @@ public class GameManagement : MonoBehaviour
             
             
             File.WriteAllText(filepath+"/SavedFile.json",JsonHelper.ToJson(SAVE.ObjectRecords.ToArray()));
-            UI.SeeMSG("Saved Recording from RAM to external file");
+            ServerConnection.Store();
+            
+            UI.SeeMSG("Saved Recording from RAM to external server");
         }
 
         //Take the 1 file, and deconstruct it into the action data for each object
         if (Input.GetKeyDown(KeyCode.P) && !viewing && !Recording)
         {
-
-            if (!File.Exists(filepath + "/SavedFile.json"))
-            {
-                UI.SeeMSG("No Recording Saved");
-            }
-            else
-            {
-                List<String> LOAD = JsonHelper.FromJson<String>(File.ReadAllText(filepath+"/SavedFile.json")).ToList();
-
-                //set the data for each object
-                for (int i = 0; i < Objects.Count; i++)
-                {
-                    Objects[i].SetActionData(LOAD[i]);
-                }
-            
-                UI.SeeMSG("Replaced Recording in RAM from saved external file"); 
-            }
+            ServerConnection.GetSave(this);
         }
+        
+        
         //Quest the Application
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -132,6 +123,18 @@ public class GameManagement : MonoBehaviour
         }
     }
 
+    public void LOADSAVE()
+    {
+        List<String> LOAD = JsonHelper.FromJson<String>(File.ReadAllText(filepath+"/SavedFile.json")).ToList();
+
+        //set the data for each object
+        for (int i = 0; i < Objects.Count; i++)
+        {
+            Objects[i].SetActionData(LOAD[i]);
+        }
+            
+        UI.SeeMSG("Replaced Recording in RAM from saved external server"); 
+    }
     private void FixedUpdate()
     {
         //Controls for Viewing the recording

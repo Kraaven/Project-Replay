@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "582142783154",
+    "project_id": "project-replay-df7ea",
+    "storage_bucket": "project-replay-df7ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582142783154:android:75065fce43e1924d7da3ab",
+        "android_client_info": {
+          "package_name": "com.projectreplay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQEdBP5bTLxGPDfgIKarojcIFh8UxcT9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
